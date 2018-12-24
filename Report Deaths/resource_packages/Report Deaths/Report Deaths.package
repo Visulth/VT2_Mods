@@ -1,0 +1,11 @@
+mod = [
+	"Report Deaths"
+]
+
+package = [
+	"resource_packages/Report Deaths/Report Deaths"
+]
+
+lua = [
+	"scripts/mods/Report Deaths/*"
+]
