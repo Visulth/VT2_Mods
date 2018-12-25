@@ -8,22 +8,22 @@ return {
 	knocked_down = {
 		en = "has been knocked down"
 	},
-	title = {
+	report_deaths = {
 		en = "Report Deaths"
 	},
-	deaths_tip = {
+	report_deaths_description = {
 		en = "Should deaths be reported in chat"
 	},
 	report_knocked = {
 		en = "Report Knocked Down"
 	},
-	knocked_tip = {
+	report_knocked_description = {
 		en = "Should being knocked down be reported in chat"
 	},
 	report_bots = {
 		en = "Report Bots"
 	},
-	bots_tip = {
+	report_bots_description = {
 		en = "Should bots be reported in chat"
 	},
 --[[
