@@ -1,34 +1,47 @@
 local mod = get_mod("Report Deaths")
 
-local function ReportEvent(report, player, text)
+local function ReportEvent(player, text)
 
-	if (not report) then
-		return
-	end
+	local network_manager = Managers.state.network
+	local is_server = network_manager.is_server
+	local player_name = player:name()
 	
-	if (player.bot_player) then -- can be nil sometimes
+	if (is_server and player.bot_player) then
 		
 		if (mod:get("report_bots")) then
-			mod:echo("[BOT] %s %s", player:name(), text)
+			mod:echo("[BOT] %s %s", player_name, text)
 		end
 	
 	else
 	
 		local profile = SPProfiles[player:profile_index()]
 		local characterName = Localize(profile.character_name)
-		mod:echo("%s [%s] %s", characterName, player:name(), text)
+		if (not is_server and characterName == player_name) then
+			--Crude way of checking if remote players are bots as client...
+			mod:echo("[BOT] %s %s", player_name, text)
+		else
+			mod:echo("%s [%s] %s", characterName, player_name, text)
+		end
 	
 	end
 end
 
 mod:hook_safe(PlayerUnitHealthExtension, "set_dead", function (self)
 	
-	ReportEvent(mod:get("report_deaths"), self.player, mod:localize("has_died"))
+	if (not mod:get("report_deaths")) then
+		return
+	end
+	
+	ReportEvent(self.player, mod:localize("has_died"))
 	
 end)
 
-mod:hook_safe(PlayerUnitHealthExtension, "knock_down", function (self)
+mod:hook_safe(GenericStatusExtension, "set_knocked_down", function (self)
     
-	ReportEvent(mod:get("report_knocked"), self.player, mod:localize("knocked_down"))
+	if (not mod:get("report_knocked") or not self.knocked_down) then
+		return
+	end
+	
+	ReportEvent(self.player, mod:localize("knocked_down"))
 	
 end)
