@@ -5,8 +5,14 @@ return {
 	has_died = {
 		en = "has died"
 	},
+	killed_by = {
+		en = "has been killed by "
+	},
 	knocked_down = {
 		en = "has been knocked down"
+	},
+	knocked_down_by = {
+		en = "has been knocked down by "
 	},
 	report_deaths = {
 		en = "Report Deaths"
