@@ -6,13 +6,16 @@ return {
 		en = "has died"
 	},
 	killed_by = {
-		en = "has been killed by "
+		--en = "has been killed by "
+		en = "killed by "
 	},
 	knocked_down = {
-		en = "has been knocked down"
+		--en = "has been knocked down"
+		en = "knocked down"
 	},
 	knocked_down_by = {
-		en = "has been knocked down by "
+		--en = "has been knocked down by "
+		en = "knocked down by "
 	},
 	report_deaths = {
 		en = "Report Deaths"

@@ -48,7 +48,7 @@ local DamageSourceNames = {
 	warpfire_ground = "warpfire",
 	vomit_ground = "acid", --used for buboes and troll bile
 	vomit_face = "Chaos Troll bile",
-	plague_face = "Chaos magic",
+	plague_face = "Chaos magic", --used for Rasknitt ground beam and Halescourge triple-slime DoT
 	burninating = "fire", --lamp oil fire and UC explosive damage
 	explosive_barrel = "an Explosive Barrel",
 	knockdown_bleed = "bleeding out",
@@ -62,21 +62,22 @@ local function ReportEvent(player, text)
 	local is_server = network_manager.is_server
 	local player_name = player:name()
 	
+	local profile = SPProfiles[player:profile_index()]
+	local character_name_short = Localize(profile.ingame_short_display_name)
+	
 	if (is_server and player.bot_player) then
 		
 		if (mod:get("report_bots")) then
-			mod:echo("[BOT] %s %s", player_name, text)
+			mod:echo("[BOT] %s %s", character_name_short, text)
 		end
 	
 	else
-	
-		local profile = SPProfiles[player:profile_index()]
-		local characterName = Localize(profile.character_name)
-		if (not is_server and characterName == player_name) then
+		local character_name = Localize (profile.character_name)
+		if (not is_server and character_name == player_name) then
 			--Crude way of checking for bots as client...
-			mod:echo("[BOT] %s %s", player_name, text)
+			mod:echo("[BOT] %s %s", character_name_short, text)
 		else
-			mod:echo("%s [%s] %s", characterName, player_name, text)
+			mod:echo("%s [%s] %s", character_name_short, player_name, text)
 		end
 	
 	end
@@ -88,7 +89,7 @@ local function GetDamageSourceOutputString(damageSource)
 	local damageSourceName = ""
 	if (DamageUtils.is_player_unit(damageSource)) then
 		local owner = Managers.player:owner(damageSource)
-        local profile_index = owner:profile_index()		
+		local profile_index = owner:profile_index()		
 		damageSourceName = Localize(SPProfiles[profile_index].character_name)
 	else
 		damageSourceName = DamageSourceNames[damageSource]
@@ -113,7 +114,6 @@ local function GetLastDamageSource(health_extension)
 		local active_damage_buffer_index = system_data.active_damage_buffer_index
 		local damage_queue = damage_buffers[active_damage_buffer_index]
 		damage_info, array_length = pdArray.data(damage_queue)
-	
 	end
 	
 	if array_length > 0 then
