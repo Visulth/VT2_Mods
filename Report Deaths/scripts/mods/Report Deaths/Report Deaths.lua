@@ -128,7 +128,7 @@ local function GetLastDamageSource(health_extension)
 			local damage_type = damage_info[index + DamageDataIndex.DAMAGE_TYPE]
 			local damage_source_name = damage_info[index + DamageDataIndex.DAMAGE_SOURCE_NAME]
 			
-			mod:echo("attacker_unit: [%s], damage_type: [%s], damage_source_name: [%s]", attacker_unit, damage_type, damage_source_name)
+			--mod:echo("attacker_unit: [%s], damage_type: [%s], damage_source_name: [%s]", attacker_unit, damage_type, damage_source_name)
 			
 			if (DamageUtils.is_enemy(attacker_unit)) then
 				damageSource = Unit.get_data(attacker_unit, "breed").name
@@ -145,8 +145,8 @@ local function GetLastDamageSource(health_extension)
 			
 			end				
 		end
-	else				
-		damageSource = health_extension._recent_damage_type
+	--else				
+		--damageSource = health_extension._recent_damage_type
 		--worst case scenario, output the damage type
 	end
 	
