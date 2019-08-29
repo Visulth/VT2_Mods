@@ -15,6 +15,11 @@ local DamageSourceNames = {
 	chaos_fanatic = "a Chaos Fanatic",
 	chaos_warrior = "a Chaos Warrior",
 	chaos_berzerker = "a Chaos Berserker",
+	beastmen_bestigor = "a Bestigor",
+	beastmen_gor = "a Gor",
+	beastmen_ungor = "an Ungor",
+	beastmen_ungor_archer = "an Ungor Archer",
+	beastmen_standard_bearer = "a Standard Bearer",
 	
 	--specials
 	skaven_ratling_gunner = "a Ratling Gunner",
@@ -32,6 +37,7 @@ local DamageSourceNames = {
 	chaos_troll = "a Chaos Troll",
 	skaven_rat_ogre = "a Rat Ogre",
 	skaven_stormfiend = "a Stormfiend",
+	beastmen_minotaur = "a Minotaur",
 	
 	--lords
 	chaos_exalted_champion_warcamp = "Bödvarr Ribspreader",
@@ -44,8 +50,6 @@ local DamageSourceNames = {
 	skaven_grey_seer = "Rasknitt",
 	
 	--damageTypes for sources not considered enemies
-	damage_over_time = "gas",
-	warpfire_ground = "warpfire",
 	vomit_ground = "acid", --used for buboes and troll bile
 	vomit_face = "Chaos Troll bile",
 	plague_face = "Chaos magic", --used for Rasknitt ground beam and Halescourge triple-slime DoT
@@ -53,7 +57,8 @@ local DamageSourceNames = {
 	explosive_barrel = "an Explosive Barrel",
 	knockdown_bleed = "bleeding out",
 	kinetic = "falling",
-	overcharge = "blowing up",
+	overcharge = "overheating",
+	magic_barrel = "a Spark Barrel",
 }
 
 local function ReportEvent(player, text)
@@ -123,15 +128,17 @@ local function GetLastDamageSource(health_extension)
 			local damage_type = damage_info[index + DamageDataIndex.DAMAGE_TYPE]
 			local damage_source_name = damage_info[index + DamageDataIndex.DAMAGE_SOURCE_NAME]
 			
+			mod:echo("attacker_unit: [%s], damage_type: [%s], damage_source_name: [%s]", attacker_unit, damage_type, damage_source_name)
+			
 			if (DamageUtils.is_enemy(attacker_unit)) then
 				damageSource = Unit.get_data(attacker_unit, "breed").name
 			else				
-				if (DamageSourceNames[damage_type]) then
-				--e.g., rasknitt ground beam, troll small acid pool, fire barrel report damage_type but no- or a non-descriptive- damage_source_name
-					damageSource = damage_type
-				elseif (DamageSourceNames[damage_source_name]) then
+				if (DamageSourceNames[damage_source_name]) then
 				--e.g., gas, troll long acid pool, stormfiend ground-fire, rasknitt triple burst
 					damageSource = damage_source_name
+				elseif (DamageSourceNames[damage_type]) then
+				--e.g., rasknitt ground beam, troll small acid pool, fire barrel report damage_type but no- or a non-descriptive- damage_source_name
+					damageSource = damage_type
 				elseif (DamageUtils.is_player_unit(attacker_unit)) then
 					damageSource = attacker_unit
 				end
