@@ -29,6 +29,12 @@ return {
 	report_knocked_description = {
 		en = "Should being knocked down be reported in chat"
 	},
+	report_cause = {
+		en = "Report Cause of Death"
+	},
+	report_cause_description = {
+		en = "Should Cause of Death be reported in chat"
+	},
 	report_bots = {
 		en = "Report Bots"
 	},

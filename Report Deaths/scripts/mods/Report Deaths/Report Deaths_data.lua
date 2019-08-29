@@ -22,6 +22,11 @@ return {
 				type          = "checkbox",
 				default_value = false
 			},
+			{
+				setting_id    = "report_cause",
+				type          = "checkbox",
+				default_value = true
+			},
 		}
 	}
 }

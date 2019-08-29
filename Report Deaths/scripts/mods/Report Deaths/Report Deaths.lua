@@ -161,7 +161,7 @@ mod:hook_safe(PlayerUnitHealthExtension, "set_dead", function (self)
 	end
 	
 	local damageSource = GetLastDamageSource(self)
-	if (damageSource ~= nil and damageSource ~= "") then
+	if (damageSource ~= nil and damageSource ~= "" and mod:get("report_cause")) then
 		ReportEvent(self.player, mod:localize("killed_by") .. GetDamageSourceOutputString(damageSource))
 	else
 		ReportEvent(self.player, mod:localize("has_died"))
@@ -175,7 +175,7 @@ mod:hook_safe(GenericStatusExtension, "set_knocked_down", function (self)
 	end
 	
 	local damageSource = GetLastDamageSource(self.health_extension)
-	if (damageSource ~= nil and damageSource ~= "") then
+	if (damageSource ~= nil and damageSource ~= "" and mod:get("report_cause")) then
 		ReportEvent(self.player, mod:localize("knocked_down_by") .. GetDamageSourceOutputString(damageSource))
 	else
 		ReportEvent(self.player, mod:localize("knocked_down"))
